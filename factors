@@ -1,38 +1,24 @@
-#!/usr/bin/env python3
-""" Factor numbers """
-from sys import argv
-from math import sqrt
+import sys
 
-
-def open_read_file(file_name):
-    """read from file
-    add to array
+def factorize(num):
     """
-    with open(file_name, "r", encoding="utf-8") as file:
-        lines = file.readlines()
-    number_to_factor = []
-    for line in lines:
-        number_to_factor.append(int(line))
-    return number_to_factor
-
-
-def find_and_times(n):
-    """factor each
-    n given
+    Factorize a number into a product of two smaller numbers.
     """
-    for i in range(1, n):
-        if n == ((n // i) * i):
-            print("{}={}*{}".format(n, (n // i), i))
-            break
+    for i in range(2, num):
+        if num % i == 0:
+            return i, num // i
+    return None
 
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print('Error: More than one argument')
+        sys.exit(1)
 
-def fac_list(ls):
-    """factor each
-    num in ls
-    """
-    for i in ls:
-        find_and_times(i)
+    file_path = sys.argv[1]
+    with open(file_path, 'r') as f:
+        for line in f:
+            num = int(line[:-1])
+            factors = factorize(num)
+            if factors:
+                print(f'{num}={factors[0]}*{factors[1]}')
 
-
-if len(argv) == 2:
-    fac_list(open_read_file(argv[1]))
